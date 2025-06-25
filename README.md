@@ -16,3 +16,5 @@ This assignment includes a minimal full-stack prototype to validate the integrat
 
 
 3. Start the server
+
+   node server.js
