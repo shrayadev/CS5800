@@ -12,5 +12,7 @@ This assignment includes a minimal full-stack prototype to validate the integrat
 
 2. Install dependencies:
 
+   npm install
+
 
 3. Start the server
