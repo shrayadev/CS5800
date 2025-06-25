@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hello World App</title>
+</head>
+<body>
+  <h1 id="message">Loading message...</h1>
+
+  <script>
+    fetch('/api/hello')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('message').innerText = data;
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('message').innerText = 'Error fetching message.';
+      });
+  </script>
+</body>
+</html>
