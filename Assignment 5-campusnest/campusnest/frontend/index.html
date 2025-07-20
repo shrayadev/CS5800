@@ -60,13 +60,15 @@
   <div id="listings">Loading listings...</div>
 
   <script>
+    const BACKEND_URL = 'https://cs5800.onrender.com';
+
     function loadListings() {
       const maxRent = document.getElementById('maxRent').value;
       const roomType = document.getElementById('roomType').value;
       const maxDistance = document.getElementById('maxDistance').value;
       const amenities = document.getElementById('amenities').value;
 
-      let url = 'http://localhost:3000/api/listings?';
+      let url = `${BACKEND_URL}/api/listings?`;
       if (maxRent) url += `maxRent=${maxRent}&`;
       if (roomType) url += `roomType=${roomType}&`;
       if (maxDistance) url += `maxDistance=${maxDistance}&`;
@@ -100,7 +102,7 @@
         })
         .catch(error => {
           document.getElementById('listings').innerHTML = '<p>Error loading listings.</p>';
-          console.error('Fetch error:', error);
+          console.error('Error fetching listings:', error);
         });
     }
 
