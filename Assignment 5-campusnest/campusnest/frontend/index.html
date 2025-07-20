@@ -60,15 +60,14 @@
   <div id="listings">Loading listings...</div>
 
   <script>
-    const BACKEND_URL = 'https://cs5800.onrender.com'; // ✅ Make sure this matches your Render URL
-
+    // ✅ Using relative path so it works on localhost and deployed domain
     function loadListings() {
       const maxRent = document.getElementById('maxRent').value;
       const roomType = document.getElementById('roomType').value;
       const maxDistance = document.getElementById('maxDistance').value;
       const amenities = document.getElementById('amenities').value;
 
-      let url = `${BACKEND_URL}/api/listings?`;
+      let url = '/api/listings?';
       if (maxRent) url += `maxRent=${maxRent}&`;
       if (roomType) url += `roomType=${roomType}&`;
       if (maxDistance) url += `maxDistance=${maxDistance}&`;
