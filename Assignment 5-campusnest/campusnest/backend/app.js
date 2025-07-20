@@ -13,22 +13,22 @@ const {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ✅ CORS fix: allow all origins explicitly
+// ✅ CORS fix: explicitly allow your deployed frontend origin
 app.use(cors({
-  origin: '*'
+  origin: 'https://campusnest-lod6.onrender.com' // replace with your actual frontend domain if different
 }));
 
 app.use(express.json());
 
-// Optional: serve static frontend if needed
+// Optional: serve frontend if colocated
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// Health check
+// Health check route
 app.get('/api/test', (req, res) => {
   res.send('Backend is running!');
 });
 
-// Listings route
+// GET /api/listings with optional filters
 app.get('/api/listings', (req, res) => {
   let results = getAllListings();
 
@@ -45,6 +45,7 @@ app.get('/api/listings', (req, res) => {
   res.json(results);
 });
 
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
