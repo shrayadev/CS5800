@@ -60,7 +60,7 @@
   <div id="listings">Loading listings...</div>
 
   <script>
-    const BACKEND_URL = 'https://cs5800.onrender.com';
+    const BACKEND_URL = 'https://cs5800.onrender.com'; // ✅ Make sure this matches your Render URL
 
     function loadListings() {
       const maxRent = document.getElementById('maxRent').value;
@@ -75,7 +75,12 @@
       if (amenities) url += `amenities=${encodeURIComponent(amenities)}&`;
 
       fetch(url)
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(data => {
           const container = document.getElementById('listings');
           container.innerHTML = '';
