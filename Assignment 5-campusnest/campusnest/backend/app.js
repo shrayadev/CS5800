@@ -13,10 +13,14 @@ const {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+// ✅ CORS fix: allow all origins explicitly
+app.use(cors({
+  origin: '*'
+}));
+
 app.use(express.json());
 
-// Serve frontend
+// Optional: serve static frontend if needed
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Health check
@@ -24,7 +28,7 @@ app.get('/api/test', (req, res) => {
   res.send('Backend is running!');
 });
 
-// Get all listings
+// Listings route
 app.get('/api/listings', (req, res) => {
   let results = getAllListings();
 
