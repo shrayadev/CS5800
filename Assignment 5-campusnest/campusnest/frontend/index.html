@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CampusNest - Cal Poly Pomona Listings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .filters {
+      margin-bottom: 20px;
+    }
+    .filters input {
+      margin-right: 10px;
+      padding: 5px;
+    }
+    button {
+      padding: 6px 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .listing {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .listing h2 {
+      margin-top: 0;
+    }
+    .amenities {
+      font-size: 0.9em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>CampusNest Listings (Cal Poly Pomona)</h1>
+
+  <div class="filters">
+    <input type="number" id="maxRent" placeholder="Max Rent ($)">
+    <input type="text" id="roomType" placeholder="Room Type (e.g., Private)">
+    <input type="number" step="0.1" id="maxDistance" placeholder="Max Distance (miles)">
+    <input type="text" id="amenities" placeholder="Amenities (comma-separated)">
+    <button onclick="loadListings()">Search</button>
+  </div>
+
+  <div id="listings">Loading listings...</div>
+
+  <script>
+    function loadListings() {
+      const maxRent = document.getElementById('maxRent').value;
+      const roomType = document.getElementById('roomType').value;
+      const maxDistance = document.getElementById('maxDistance').value;
+      const amenities = document.getElementById('amenities').value;
+
+      let url = 'http://localhost:3000/api/listings?';
+      if (maxRent) url += `maxRent=${maxRent}&`;
+      if (roomType) url += `roomType=${roomType}&`;
+      if (maxDistance) url += `maxDistance=${maxDistance}&`;
+      if (amenities) url += `amenities=${encodeURIComponent(amenities)}&`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('listings');
+          container.innerHTML = '';
+
+          if (data.length === 0) {
+            container.innerHTML = '<p>No listings found.</p>';
+            return;
+          }
+
+          data.forEach(listing => {
+            const div = document.createElement('div');
+            div.className = 'listing';
+            div.innerHTML = `
+              <h2>${listing.title}</h2>
+              <p><strong>Rent:</strong> $${listing.rent}</p>
+              <p><strong>Room Type:</strong> ${listing.roomType}</p>
+              <p><strong>Distance:</strong> ${listing.distance} miles</p>
+              <p><strong>Address:</strong> ${listing.address}</p>
+              <p class="amenities"><strong>Amenities:</strong> ${listing.amenities.join(', ')}</p>
+              <p><strong>Verified:</strong> ${listing.verified ? '✔️' : '❌'}</p>
+            `;
+            container.appendChild(div);
+          });
+        })
+        .catch(error => {
+          document.getElementById('listings').innerHTML = '<p>Error loading listings.</p>';
+          console.error('Fetch error:', error);
+        });
+    }
+
+    window.onload = loadListings;
+  </script>
+</body>
+</html>
