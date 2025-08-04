@@ -8,13 +8,13 @@ const {
   filterByRoomType,
   findNearbyListings,
   filterByAmenities,
-  addListing // ✅ Include the addListing function
+  addListing 
 } = require('./controllers/listingsController');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ✅ CORS configuration
+
 app.use(cors({
   origin: '*'
 }));
@@ -29,7 +29,7 @@ app.get('/api/test', (req, res) => {
   res.send('Backend is running!');
 });
 
-// ✅ GET /api/listings with filters
+
 app.get('/api/listings', (req, res) => {
   let results = getAllListings();
 
@@ -46,7 +46,7 @@ app.get('/api/listings', (req, res) => {
   res.json(results);
 });
 
-// ✅ POST /api/listings — simulate adding new listings in-memory
+
 app.post('/api/listings', (req, res) => {
   const newListing = req.body;
 
@@ -63,3 +63,4 @@ app.post('/api/listings', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
