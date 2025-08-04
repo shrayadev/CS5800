@@ -16,4 +16,3 @@ CampusNest is a full-stack web application that demonstrates how modern web deve
 1. Clone the repository.
 2. Run:
     npm install
-
