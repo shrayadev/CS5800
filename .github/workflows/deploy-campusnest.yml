@@ -22,9 +22,11 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+        working-directory: FinalProject
 
       - name: Run Tests
         run: npm test
+        working-directory: FinalProject
 
       - name: Trigger Render Deploy for CampusNest
         run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_CAMPUSNEST }}
